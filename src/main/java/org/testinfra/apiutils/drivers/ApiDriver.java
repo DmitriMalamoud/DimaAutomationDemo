@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ApiDriver {
-    public<T> HttpResponse<T> sendApiRequest(String endpoint, String body, List<String> headers, Class<T> responseType)
+    protected <T> HttpResponse<T> sendApiRequest(String endpoint, String body, List<String> headers, Class<T> responseType)
             throws IOException, InterruptedException, URISyntaxException {
 
         URI uri = new URI(TestConstants.BASE_API_URL + endpoint);
