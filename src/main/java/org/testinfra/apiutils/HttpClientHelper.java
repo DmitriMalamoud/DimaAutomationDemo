@@ -1,4 +1,4 @@
-package org.testInfra.apiUtils;
+package org.testinfra.apiutils;
 
 import java.net.http.HttpClient;
 

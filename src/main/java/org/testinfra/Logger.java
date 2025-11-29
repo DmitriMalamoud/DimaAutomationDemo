@@ -1,4 +1,4 @@
-package org.testInfra.loggingUtils;
+package org.testinfra;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;

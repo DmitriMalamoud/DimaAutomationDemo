@@ -1,6 +1,7 @@
-package org.testInfra.apiUtils;
+package org.testinfra.apiutils;
 
-import java.io.IOException;
+import org.testinfra.GsonHelper;
+
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 

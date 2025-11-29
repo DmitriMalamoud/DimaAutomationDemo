@@ -1,11 +1,13 @@
-package org.testInfra.apiUtils;
+package org.testinfra.apiutils.drivers;
 
 import com.google.gson.JsonObject;
+import org.testinfra.GsonHelper;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 
-public class ApiTextDriver extends ApiDriver{
+public class ApiTextDriver extends ApiDriver {
     public HttpResponse<String> sendTextMirrorRequest(String text) throws IOException, InterruptedException, URISyntaxException {
        return sendApiRequest("text-mirror", buildBodyJson(text), null, String.class);
     }

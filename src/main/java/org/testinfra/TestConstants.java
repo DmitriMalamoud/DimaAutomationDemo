@@ -1,4 +1,4 @@
-package org.testInfra;
+package org.testinfra;
 
 public class TestConstants {
 

@@ -1,7 +1,9 @@
-package org.testInfra.apiUtils;
+package org.testinfra.apiutils.drivers;
 
-import org.testInfra.TestConstants;
-import org.testInfra.loggingUtils.Logger;
+import org.testinfra.TestConstants;
+import org.testinfra.apiutils.BodyHandler;
+import org.testinfra.apiutils.HttpClientHelper;
+import org.testinfra.Logger;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,15 +30,6 @@ public abstract class ApiDriver {
 
         return HttpClientHelper.getClient()
                 .send(httpRequest, new BodyHandler<>(responseType));
-    }
-
-    protected String buildRequestBody(String text){
-        return buildRequestBody(text, null);
-    }
-
-    protected String buildRequestBody(String text, String subtext){
-        ApiRequestTextBody requestBody = new ApiRequestTextBody(text, subtext);
-        return GsonHelper.getGson().toJson(requestBody);
     }
 
     private void logApiRequest(String uri, String body){

@@ -1,4 +1,4 @@
-package org.testInfra.apiUtils;
+package org.testinfra;
 
 import com.google.gson.Gson;
 
