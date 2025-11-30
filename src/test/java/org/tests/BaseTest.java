@@ -1,18 +1,22 @@
 package org.tests;
 
+import org.ExtentReportExtension;
 import org.api.DemoApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.testinfra.apiutils.drivers.ApiTextDriver;
-import org.testinfra.assertionutils.AssertionUtil;
-import org.testinfra.assertionutils.FailureStateTracker;
+import org.testinfra.Logger;
+import org.testinfra.apiutils.cilents.ApiStringClient;
+import org.assertionutils.AssertionUtil;
+import org.assertionutils.FailureStateTracker;
 
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
         classes = DemoApplication.class)
+@ExtendWith(ExtentReportExtension.class)
 public class BaseTest {
 
     @LocalServerPort
@@ -20,25 +24,23 @@ public class BaseTest {
 
     protected FailureStateTracker failureStateTracker;
     protected static AssertionUtil assertion;
-    protected static ApiTextDriver api;
-
-    public static void init() {
-        assertion = new AssertionUtil();
-    }
+    protected static ApiStringClient api;
 
     @BeforeAll
     public static void beforeAll() {
-        init();
+        assertion = new AssertionUtil();
     }
 
     @BeforeEach
     public void beforeEach() {
+        Logger.get().newTestStep("Test Prep");
         failureStateTracker = new FailureStateTracker();
-        api = new ApiTextDriver(port);
+        api = new ApiStringClient(port);
     }
 
     @AfterEach
     public void afterEach() {
+        Logger.get().newTestStep("Test Teardown");
         failureStateTracker.failSoftAsserts();
     }
 }

@@ -1,14 +1,14 @@
-package org.testinfra.apiutils.drivers;
+package org.testinfra.apiutils.cilents;
 
 import com.google.gson.JsonObject;
-import org.testinfra.GsonHelper;
+import org.testinfra.GsonProvider;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 
-public class ApiTextDriver extends ApiDriver {
-    public ApiTextDriver(int port){
+public class ApiStringClient extends ApiClient {
+    public ApiStringClient(int port){
         this.port = port;
     }
 
@@ -20,8 +20,12 @@ public class ApiTextDriver extends ApiDriver {
         return sendApiRequest("string-count", buildBodyJson(text), null, Integer.class);
     }
 
+    public HttpResponse<Boolean> sendTextContainsRequest(String text, String subtext) throws IOException, InterruptedException, URISyntaxException {
+        return sendApiRequest("string-contains", buildBodyJson(text, subtext), null, Boolean.class);
+    }
+
     public HttpResponse<Boolean> sendTextContainsRequest(String text) throws IOException, InterruptedException, URISyntaxException {
-        return sendApiRequest("string-contains", buildBodyJson(text), null, Boolean.class);
+        return sendTextContainsRequest(text, null);
     }
 
     private String buildBodyJson(String text){
@@ -32,6 +36,6 @@ public class ApiTextDriver extends ApiDriver {
         JsonObject root = new JsonObject();
         root.addProperty("text", text);
         root.addProperty("subtext", subtext);
-        return GsonHelper.getGson().toJson(root);
+        return GsonProvider.getGson().toJson(root);
     }
 }

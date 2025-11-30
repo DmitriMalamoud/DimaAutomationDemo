@@ -2,7 +2,7 @@ package org.testinfra;
 
 import com.google.gson.Gson;
 
-public class GsonHelper {
+public class GsonProvider {
 
     private static Gson gsonInstance;
 

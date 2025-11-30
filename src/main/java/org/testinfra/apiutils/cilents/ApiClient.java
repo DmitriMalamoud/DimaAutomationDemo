@@ -1,9 +1,9 @@
-package org.testinfra.apiutils.drivers;
+package org.testinfra.apiutils.cilents;
 
+import org.testinfra.Logger;
 import org.testinfra.TestConstants;
 import org.testinfra.apiutils.BodyHandler;
-import org.testinfra.apiutils.HttpClientHelper;
-import org.testinfra.Logger;
+import org.testinfra.apiutils.HttpClientProvider;
 
 import java.io.IOException;
 import java.net.URI;
@@ -14,13 +14,13 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ApiDriver {
+public abstract class ApiClient {
     protected int port;
     protected <T> HttpResponse<T> sendApiRequest(String endpoint, String body, List<String> headers, Class<T> responseType)
-            throws IOException, InterruptedException, URISyntaxException {
+            throws IOException, InterruptedException {
 
         URI uri =  URI.create(String.format(TestConstants.BASE_API_URL, port) + endpoint);
-        logApiRequest(uri.toString(), body);
+        logApiRequest(uri.toString(), body, endpoint);
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .POST(HttpRequest.BodyPublishers.ofString(body))
@@ -37,13 +37,20 @@ public abstract class ApiDriver {
 
         HttpRequest httpRequest = requestBuilder.build();
 
-        return HttpClientHelper.getClient()
+        HttpResponse<T> response = HttpClientProvider.getClient()
                 .send(httpRequest, new BodyHandler<>(responseType));
+        logApiResponse(response.statusCode(), response.body().toString());
+        return response;
     }
 
-    private void logApiRequest(String uri, String body){
-        Logger.log("API request");
-        Logger.log("URI: " + uri);
-        Logger.log("Request body: " + body);
+    private void logApiRequest(String uri, String body, String endpoint){
+        Logger.get().log("API request to " + endpoint);
+        Logger.get().log("URI: " + uri);
+        Logger.get().log("Request body: " + body);
+    }
+
+    private void logApiResponse(int code, String body){
+        Logger.get().log("Response status code: " + code);
+        Logger.get().log("Response body: " + body);
     }
 }

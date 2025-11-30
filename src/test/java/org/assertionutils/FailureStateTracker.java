@@ -1,4 +1,6 @@
-package org.testinfra.assertionutils;
+package org.assertionutils;
+
+import org.testinfra.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +24,11 @@ public class FailureStateTracker {
         if(failures != null && !failures.isEmpty()){
             String failuresStr = failures.stream().reduce((failure1, failure2) ->
                     failure1 + "\n" + failure2).get();
+            Logger.get().fail("Test failed: " + failuresStr);
             throw new AssertionError(failuresStr);
+        }
+        else{
+            Logger.get().pass();
         }
     }
 }

@@ -1,7 +1,7 @@
 package org.testinfra.apiutils;
 
 import com.google.gson.JsonObject;
-import org.testinfra.GsonHelper;
+import org.testinfra.GsonProvider;
 
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
@@ -24,10 +24,10 @@ public class BodyHandler<T> implements HttpResponse.BodyHandler<T> {
                             return type.cast(body);
                         }
                         else{
-                            return GsonHelper.getGson().fromJson(body, type);
+                            return GsonProvider.getGson().fromJson(body, type);
                         }
                     }
-                    return (T)GsonHelper.getGson().fromJson(body, JsonObject.class);
+                    return (T) GsonProvider.getGson().fromJson(body, JsonObject.class);
                 }
         );
     }

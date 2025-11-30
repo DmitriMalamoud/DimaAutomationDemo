@@ -2,7 +2,7 @@ package org.testinfra.apiutils;
 
 import java.net.http.HttpClient;
 
-public class HttpClientHelper {
+public class HttpClientProvider {
 
     private static HttpClient client;
 
