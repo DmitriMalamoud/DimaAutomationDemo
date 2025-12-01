@@ -33,7 +33,7 @@ pipeline {
                         default:
                             error "Unsupported environment: ${params.Environment}"
                     }
-                sh 'mvn -B clean test -Dapi.baseUrl=${baseUrl}'
+                sh "mvn -B clean test -Dapi.baseUrl=${baseUrl}"
                 }
             }
         }
@@ -42,7 +42,7 @@ pipeline {
     post {
         always {
             script {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.API_BASE_URL}"
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
             archiveArtifacts artifacts: 'target/automation-report-*.html', fingerprint: true
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
