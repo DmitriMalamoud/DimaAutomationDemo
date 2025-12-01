@@ -10,7 +10,7 @@ import java.net.http.HttpResponse;
 
 public class TextApiTests extends BaseTest{
 
-    @Tag("Sanity")
+    @Tag("sanity")
     @DisplayName("Mirror Text API Test")
     @Test
     public void mirrorTextTest() throws Exception {
@@ -27,7 +27,7 @@ public class TextApiTests extends BaseTest{
                 AssertType.HARD);
     }
 
-    @Tag("Sanity")
+    @Tag("sanity")
     @DisplayName("Count Text API Test")
     @Test
     public void countTextTest() throws Exception {
@@ -44,7 +44,7 @@ public class TextApiTests extends BaseTest{
                 AssertType.HARD);
     }
 
-    @Tag("Sanity")
+    @Tag("sanity")
     @DisplayName("Contains Text API Test")
     @Test
     public void containsTextTest() throws Exception {
@@ -66,7 +66,7 @@ public class TextApiTests extends BaseTest{
                 AssertType.HARD);
     }
 
-    @Tag("Sanity")
+    @Tag("sanity")
     @DisplayName("Negative Contains Text API Test")
     @Test
     public void negativeContainsTextTest() throws Exception {
@@ -80,7 +80,7 @@ public class TextApiTests extends BaseTest{
         failureCodeAssert(response.statusCode());
     }
 
-    @Tag("Fail Demo")
+    @Tag("fail_demo")
     @DisplayName("Failed Test Example with Soft Assertion")
     @Test
     public void failedTestExample() throws Exception{
