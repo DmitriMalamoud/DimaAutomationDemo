@@ -18,17 +18,12 @@ pipeline {
                 sh 'mvn -B clean test'
             }
         }
-
-        stage('Save Report') {
-            steps {
-                archiveArtifacts artifacts: "target/extent-report-*.html"
-                junit 'target/surefire-reports/*.xml'
-            }
-        }
     }
 
     post {
         always {
+            archiveArtifacts artifacts: 'target/automation-report-*.html', fingerprint: true
+            junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             cleanWs()
         }
     }
