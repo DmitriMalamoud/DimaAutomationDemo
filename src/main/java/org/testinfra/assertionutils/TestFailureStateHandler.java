@@ -24,7 +24,6 @@ public class TestFailureStateHandler {
         if(failures != null && !failures.isEmpty()){
             String failuresStr = failures.stream().reduce((failure1, failure2) ->
                     failure1 + "\n" + failure2).get();
-            Logger.get().fail("Test failed: " + failuresStr);
             throw new AssertionError(failuresStr);
         }
     }
