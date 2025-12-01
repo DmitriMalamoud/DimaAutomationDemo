@@ -57,7 +57,10 @@ public class ExtentReportExtension implements BeforeAllCallback, AfterAllCallbac
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
-        if(context.getExecutionException().isEmpty()){
+        if(context.getExecutionException().isPresent()){
+            Logger.get().fail(context.getExecutionException().get().getMessage());
+        }
+        else {
             Logger.get().pass();
         }
     }
