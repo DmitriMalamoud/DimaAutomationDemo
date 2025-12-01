@@ -8,8 +8,8 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 
 public class ApiStringClient extends ApiClient {
-    public ApiStringClient(int port){
-        this.port = port;
+    public ApiStringClient(int port) {
+        super(port);
     }
 
     public HttpResponse<String> sendTextMirrorRequest(String text) throws IOException, InterruptedException, URISyntaxException {

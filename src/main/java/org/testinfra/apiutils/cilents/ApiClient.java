@@ -1,13 +1,11 @@
 package org.testinfra.apiutils.cilents;
 
 import org.testinfra.Logger;
-import org.testinfra.TestConstants;
 import org.testinfra.apiutils.BodyHandler;
 import org.testinfra.apiutils.HttpClientProvider;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
@@ -15,11 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ApiClient {
-    protected int port;
+    public ApiClient(int port){
+        this.port = port;
+        envBaseUrl = System.getProperty("api.baseUrl");
+    }
+    private final int port;
+    private final String envBaseUrl;
+
     protected <T> HttpResponse<T> sendApiRequest(String endpoint, String body, List<String> headers, Class<T> responseType)
             throws IOException, InterruptedException {
 
-        URI uri =  URI.create(String.format(TestConstants.BASE_API_URL, port) + endpoint);
+        URI uri =  URI.create(String.format("%s:%s/%s", envBaseUrl, port, endpoint));
         logApiRequest(uri.toString(), body, endpoint);
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
