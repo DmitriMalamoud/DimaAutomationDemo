@@ -34,6 +34,7 @@ pipeline {
                         error "Unsupported environment: ${params.Environment}"
                     }
                 sh 'mvn -B clean test -Dapi.baseUrl=${baseUrl}'
+                }
             }
         }
     }
