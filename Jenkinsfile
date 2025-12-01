@@ -27,6 +27,9 @@ pipeline {
                     case 'STAGING_MOCK':
                         baseUrl = 'http://localhost'
                         break
+                    case 'FAIL':
+                        baseUrl = 'http://fail.url'
+                        break
                     default:
                         error "Unsupported environment: ${params.Environment}"
                     }
