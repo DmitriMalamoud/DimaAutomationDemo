@@ -3,7 +3,7 @@ package org.tests;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.testinfra.Logger;
-import org.assertionutils.AssertType;
+import org.testinfra.assertionutils.AssertType;
 
 import java.net.http.HttpResponse;
 

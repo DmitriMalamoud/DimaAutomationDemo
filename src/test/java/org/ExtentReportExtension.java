@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 public class ExtentReportExtension implements BeforeAllCallback, AfterAllCallback,
-        BeforeEachCallback, AfterTestExecutionCallback {
+        BeforeEachCallback, AfterTestExecutionCallback, AfterEachCallback {
 
     private static ExtentReports extent;
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
@@ -53,5 +53,12 @@ public class ExtentReportExtension implements BeforeAllCallback, AfterAllCallbac
 
     public static ExtentTest getTest() {
         return test.get();
+    }
+
+    @Override
+    public void afterEach(ExtensionContext context) throws Exception {
+        if(context.getExecutionException().isEmpty()){
+            Logger.get().pass();
+        }
     }
 }
