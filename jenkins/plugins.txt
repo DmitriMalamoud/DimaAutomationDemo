@@ -1,0 +1,2 @@
+pipeline-stage-view
+allure-jenkins-plugin
