@@ -7,8 +7,12 @@ pipeline {
     }
 
     parameters {
-            choice(name: 'Environment', choices: ['LOCAL', 'DEV_MOCK', 'STAGING_MOCK', 'FAIL'])
-            choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
+        choice(name: 'Environment', choices: ['LOCAL', 'DEV_MOCK', 'STAGING_MOCK', 'FAIL'])
+        choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
+    }
+
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '8'))
     }
 
     stages {
