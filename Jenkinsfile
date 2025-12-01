@@ -40,10 +40,10 @@ pipeline {
     }
 
     post {
-        script {
-            currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.API_BASE_URL}"
-        }
         always {
+            script {
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.API_BASE_URL}"
+            }
             archiveArtifacts artifacts: 'target/automation-report-*.html', fingerprint: true
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             cleanWs()
