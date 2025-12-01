@@ -1,6 +1,7 @@
 package org.tests;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.testinfra.Logger;
 import org.testinfra.assertionutils.AssertType;
@@ -9,6 +10,7 @@ import java.net.http.HttpResponse;
 
 public class TextApiTests extends BaseTest{
 
+    @Tag("Sanity")
     @DisplayName("Mirror Text API Test")
     @Test
     public void mirrorTextTest() throws Exception {
@@ -25,6 +27,7 @@ public class TextApiTests extends BaseTest{
                 AssertType.HARD);
     }
 
+    @Tag("Sanity")
     @DisplayName("Count Text API Test")
     @Test
     public void countTextTest() throws Exception {
@@ -41,6 +44,7 @@ public class TextApiTests extends BaseTest{
                 AssertType.HARD);
     }
 
+    @Tag("Sanity")
     @DisplayName("Contains Text API Test")
     @Test
     public void containsTextTest() throws Exception {
@@ -62,6 +66,7 @@ public class TextApiTests extends BaseTest{
                 AssertType.HARD);
     }
 
+    @Tag("Sanity")
     @DisplayName("Negative Contains Text API Test")
     @Test
     public void negativeContainsTextTest() throws Exception {
@@ -75,6 +80,7 @@ public class TextApiTests extends BaseTest{
         failureCodeAssert(response.statusCode());
     }
 
+    @Tag("Fail Demo")
     @DisplayName("Failed Test Example with Soft Assertion")
     @Test
     public void failedTestExample() throws Exception{

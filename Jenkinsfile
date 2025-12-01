@@ -6,6 +6,11 @@ pipeline {
         maven 'maven-3.9.11'
     }
 
+    parameters {
+            choice(name: 'Environment', choices: ['LOCAL', 'DEV_MOCK', 'STAGING_MOCK', 'FAIL'])
+            choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -33,7 +38,14 @@ pipeline {
                         default:
                             error "Unsupported environment: ${params.Environment}"
                     }
-                sh "mvn -B clean test -Dapi.baseUrl=${baseUrl}"
+
+                    def mvnCmd = "mvn -B clean test -Dapi.baseUrl=${baseUrl}"
+                    def group = params.TestGroup?.trim()
+                    if (group && !group.equalsIgnoreCase('All')) {
+                        def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
+                        mvnCmd += " -Dgroups=${normalizedTag}"
+                    }
+                    sh mvnCmd
                 }
             }
         }
@@ -42,7 +54,7 @@ pipeline {
     post {
         always {
             script {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
+                currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
             archiveArtifacts artifacts: 'target/automation-report-*.html', fingerprint: true
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
