@@ -20,7 +20,7 @@ public class TextApiTests extends BaseTest{
 
         Logger.get().newTestStep("Validations");
         successCodeAssert(response.statusCode());
-        assertion.assertEquals(failureStateTracker, response.body(),
+        assertion.assertEquals(response.body(),
                 "Your text: " + inputText, "The mirrored text should match the input text.",
                 AssertType.HARD);
     }
@@ -36,7 +36,7 @@ public class TextApiTests extends BaseTest{
 
         Logger.get().newTestStep("Validations");
         successCodeAssert(response.statusCode());
-        assertion.assertEquals(failureStateTracker, response.body(),
+        assertion.assertEquals(response.body(),
                 7, "Text count expected to match input text length.",
                 AssertType.HARD);
     }
@@ -50,14 +50,14 @@ public class TextApiTests extends BaseTest{
         Logger.get().newTestStep("Checking for non-existing substring.");
         HttpResponse<Boolean> response = api.sendTextContainsRequest(inputText, "z");
         successCodeAssert(response.statusCode());
-        assertion.assertEquals(failureStateTracker, response.body(),
+        assertion.assertEquals(response.body(),
                 false, "Expected 'false' response.",
                 AssertType.HARD);
 
         Logger.get().newTestStep("Checking for existing substring.");
         response = api.sendTextContainsRequest(inputText, "bc");
         successCodeAssert(response.statusCode());
-        assertion.assertEquals(failureStateTracker, response.body(),
+        assertion.assertEquals(response.body(),
                 true, "Expected 'true' response.",
                 AssertType.HARD);
     }
@@ -90,7 +90,7 @@ public class TextApiTests extends BaseTest{
     }
 
     private void httpCodeAssert(int actual, int expected, AssertType assertType){
-        assertion.assertEquals(failureStateTracker, actual,
+        assertion.assertEquals(actual,
                 expected, "HTTP Status should be " + expected,
                 assertType);
     }

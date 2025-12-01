@@ -5,7 +5,7 @@ import org.testinfra.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
-public class FailureStateTracker {
+public class TestFailureStateHandler {
     private List<String> failures;
 
     public void fail(String message, AssertType assertType) {
@@ -26,9 +26,6 @@ public class FailureStateTracker {
                     failure1 + "\n" + failure2).get();
             Logger.get().fail("Test failed: " + failuresStr);
             throw new AssertionError(failuresStr);
-        }
-        else{
-            Logger.get().pass();
         }
     }
 }

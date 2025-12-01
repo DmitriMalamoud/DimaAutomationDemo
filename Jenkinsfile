@@ -18,20 +18,20 @@ pipeline {
                 script {
                     def baseUrl
                     switch (params.Environment) {
-                    case 'LOCAL':
-                        baseUrl = 'http://localhost'
-                        break
-                    case 'DEV_MOCK':
-                        baseUrl = 'http://localhost'
-                        break
-                    case 'STAGING_MOCK':
-                        baseUrl = 'http://localhost'
-                        break
-                    case 'FAIL':
-                        baseUrl = 'http://fail.url'
-                        break
-                    default:
-                        error "Unsupported environment: ${params.Environment}"
+                        case 'LOCAL':
+                            baseUrl = 'http://localhost'
+                            break
+                        case 'DEV_MOCK':
+                            baseUrl = 'http://localhost'
+                            break
+                        case 'STAGING_MOCK':
+                            baseUrl = 'http://localhost'
+                            break
+                        case 'FAIL':
+                            baseUrl = 'http://fail.url'
+                            break
+                        default:
+                            error "Unsupported environment: ${params.Environment}"
                     }
                 sh 'mvn -B clean test -Dapi.baseUrl=${baseUrl}'
                 }
