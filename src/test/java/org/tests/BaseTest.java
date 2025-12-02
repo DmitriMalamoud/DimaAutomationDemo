@@ -28,7 +28,6 @@ public class BaseTest {
 
     @Autowired
     protected ApiStringClient api;
-    int port;
 
     @Autowired
     private TestEnvConfig env;
