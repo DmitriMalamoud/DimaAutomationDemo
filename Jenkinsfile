@@ -25,7 +25,7 @@ pipeline {
         stage('Build + Test') {
             steps {
                 script {
-                    def mvnCmd = sh "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
+                    def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
                     def group = params.TestGroup?.trim()
                     if (group && !group.equalsIgnoreCase('All')) {
                         def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
