@@ -31,6 +31,7 @@ pipeline {
                         def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
                         mvnCmd += " -Dgroups=${normalizedTag}"
                     }
+                    echo "Running: ${mvnCmd}"
                     sh mvnCmd
                 }
             }
