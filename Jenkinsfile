@@ -43,7 +43,11 @@ pipeline {
             script {
                 currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
-            archiveArtifacts artifacts: 'target/automation-report-*.html', fingerprint: true
+            allure(
+                includeProperties: false,
+                jdk: '',
+                results: [[path: 'target/allure-results']]
+            )
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             cleanWs()
         }
