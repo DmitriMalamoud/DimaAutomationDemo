@@ -25,25 +25,7 @@ pipeline {
         stage('Build + Test') {
             steps {
                 script {
-                    def baseUrl
-                    switch (params.Environment) {
-                        case 'LOCAL':
-                            baseUrl = 'http://localhost'
-                            break
-                        case 'DEV_MOCK':
-                            baseUrl = 'http://localhost'
-                            break
-                        case 'STAGING_MOCK':
-                            baseUrl = 'http://localhost'
-                            break
-                        case 'FAIL':
-                            baseUrl = 'http://fail.url'
-                            break
-                        default:
-                            error "Unsupported environment: ${params.Environment}"
-                    }
-
-                    def mvnCmd = "mvn -B clean test -Dapi.baseUrl=${baseUrl}"
+                    def mvnCmd = sh "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
                     def group = params.TestGroup?.trim()
                     if (group && !group.equalsIgnoreCase('All')) {
                         def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')

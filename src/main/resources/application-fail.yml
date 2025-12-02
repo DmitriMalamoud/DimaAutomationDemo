@@ -1,0 +1,6 @@
+env:
+  name: fail
+  scheme: http
+  host: fail.url
+  port: 8085
+  apiKey: "mock_key_fail"

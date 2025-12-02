@@ -1,0 +1,6 @@
+env:
+  name: local
+  scheme: http
+  host: localhost
+  port: 8085
+  apiKey: "mock_key_local"

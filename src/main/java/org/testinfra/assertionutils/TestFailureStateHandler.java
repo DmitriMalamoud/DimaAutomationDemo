@@ -1,7 +1,5 @@
 package org.testinfra.assertionutils;
 
-import org.testinfra.Logger;
-
 import java.util.LinkedList;
 import java.util.List;
 

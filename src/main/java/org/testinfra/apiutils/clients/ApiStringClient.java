@@ -1,16 +1,15 @@
-package org.testinfra.apiutils.cilents;
+package org.testinfra.apiutils.clients;
 
 import com.google.gson.JsonObject;
+import org.springframework.stereotype.Component;
 import org.testinfra.GsonProvider;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 
+@Component
 public class ApiStringClient extends ApiClient {
-    public ApiStringClient(int port) {
-        super(port);
-    }
 
     public HttpResponse<String> sendTextMirrorRequest(String text) throws IOException, InterruptedException, URISyntaxException {
        return sendApiRequest("string-mirror", buildBodyJson(text), null, String.class);

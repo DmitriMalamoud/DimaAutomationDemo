@@ -1,0 +1,6 @@
+env:
+  name: dev_mock
+  scheme: http
+  host: localhost
+  port: 8085
+  apiKey: "mock_key_dev"

@@ -1,4 +1,4 @@
-package org.api;
+package org.testinfra.apiserver;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
