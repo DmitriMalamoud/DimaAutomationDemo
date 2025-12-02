@@ -1,6 +1,6 @@
 package org.tests;
 
-import org.ExtentReportExtension;
+import io.qameta.allure.junit5.AllureJunit5;
 import org.testinfra.SpringApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,13 +16,13 @@ import org.testinfra.assertionutils.TestFailureStateHandler;
 import org.testinfra.config.TestEnvConfig;
 
 // Use active profile for local tests runs
-//@ActiveProfiles("local")
+@ActiveProfiles("local")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
         properties = "server.port=8085",
         classes = SpringApplication.class)
-@ExtendWith(ExtentReportExtension.class)
-public class BaseTest {
+@ExtendWith(AllureJunit5.class)
+public abstract class BaseTest {
     protected TestFailureStateHandler failureHandler;
     protected static AssertionUtil assertion;
 
@@ -46,7 +46,14 @@ public class BaseTest {
 
     @AfterEach
     public void afterEach() {
+        Logger.get().exitAllTestSteps();
         Logger.get().newTestStep("Test Teardown");
-        failureHandler.failSoftAsserts();
+        try {
+            // More teardown actions can be added here
+            failureHandler.failSoftAsserts();
+        }
+        finally {
+            Logger.get().exitTestStep();
+        }
     }
 }

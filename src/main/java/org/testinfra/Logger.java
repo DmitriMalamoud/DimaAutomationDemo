@@ -1,15 +1,15 @@
 package org.testinfra;
 
-import com.aventstack.extentreports.ExtentTest;
-import jakarta.validation.constraints.NotNull;
+import java.util.*;
 
-import java.util.Collections;
+import io.qameta.allure.Allure;
+import io.qameta.allure.model.Status;
+import io.qameta.allure.model.StepResult;
 
 public class Logger {
 
     private static Logger instance;
-    private ExtentTest stepNode;
-    private ExtentTest rootnode;
+    private Deque<String> logStack;
 
     private Logger(){}
 
@@ -18,10 +18,6 @@ public class Logger {
             instance = new Logger();
         }
         return instance;
-    }
-
-    public void init(@NotNull ExtentTest test){
-        rootnode = test;
     }
 
     private void baseLog(String message){
@@ -36,37 +32,51 @@ public class Logger {
 
     public void log(String message){
         baseLog(message);
-        if(null == stepNode){
-            stepNode = rootnode.createNode(message);
-        }
-        stepNode.info(message);
-    }
-
-    public void rootLog(String message){
-        baseLog(message);
-        rootnode.info(message);
+        Allure.step(message);
     }
 
     public void fail(String message){
         String separator = String.join("", Collections.nCopies(5, "-FAIL"));
         baseLog("FAILURE: " + message, separator);
-        stepNode.fail(message);
-        rootnode.fail(message);
+        Allure.step(message, Status.FAILED);
     }
 
     public void pass(){
-        final String message = "Test Passed";
-        stepNode.pass(message);
-        rootnode.pass(message);
+        Allure.step("Test Passed", Status.PASSED);
     }
 
     public void newTestStep(String message){
         baseLog("TEST STEP: " + message);
-        stepNode = rootnode.createNode(message);
-        rootLog(message);
+        String uuid = UUID.randomUUID().toString();
+        StepResult stepResult = new StepResult().setName(message);
+        Allure.getLifecycle().startStep(uuid, stepResult);
+        getLogStack().push(uuid);
+    }
+
+    public void exitTestStep() {
+        if (getLogStack().isEmpty()) {
+            return;
+        }
+        String uuid = getLogStack().pop();
+        Allure.getLifecycle().stopStep(uuid);
+    }
+
+    public void exitAllTestSteps(){
+        Iterator<String> iterator = getLogStack().descendingIterator();
+        while(iterator.hasNext()){
+            String uuid = iterator.next();
+            Allure.getLifecycle().stopStep(uuid);
+        }
     }
 
     private String getDefaultSeparator(){
         return String.join("", Collections.nCopies(12, "-"));
+    }
+
+    private Deque<String> getLogStack(){
+        if(null == logStack){
+            logStack = new ArrayDeque<>();
+        }
+        return logStack;
     }
 }
