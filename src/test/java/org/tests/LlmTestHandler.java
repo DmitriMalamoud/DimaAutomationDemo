@@ -11,9 +11,6 @@ import java.util.stream.Stream;
 @Component
 public class LlmTestHandler {
 
-    @Autowired
-    private LlmGateway llmGateway;
-
     public String getLlmResponse(String testClassName, String testMethodName, Throwable throwable) {
         LlmTestFailPromptBuilder promptBuilder = new LlmTestFailPromptBuilder();
         String prompt = promptBuilder
@@ -25,7 +22,7 @@ public class LlmTestHandler {
                 .setStepsLog(Logger.get().getJournal())
                 .setPromptType(LlmTestFailPromptBuilder.PromptType.DEFAULT)
                 .build();
-        return llmGateway.getLlmResponse(prompt);
+        return LlmGateway.get().getLlmResponse(prompt);
     }
 
     private String reduceStackTraceToString(Throwable throwable) {

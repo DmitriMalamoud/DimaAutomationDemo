@@ -20,7 +20,8 @@ public class LlmTestFailPromptBuilder {
     private String promptTemplatePath;
     private PromptType promptType;
 
-    private static final String DEFAULT_PROMPT_TEMPLATE_PATH = "test_fail_llm_prompt_template.txt";
+    private static final String DEFAULT_PROMPT_TEMPLATE_PATH =
+            "src/main/java/org/testinfra/llm//test_fail_llm_prompt_template.txt";
 
 
     public String build(){

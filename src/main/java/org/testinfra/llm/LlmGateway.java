@@ -1,9 +1,18 @@
 package org.testinfra.llm;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class LlmGateway {
+
+    private static LlmGateway instance;
+
+    private LlmGateway(){
+    }
+
+    public static LlmGateway get(){
+        if(instance == null){
+            instance = new LlmGateway();
+        }
+        return instance;
+    }
 
     public String getLlmResponse(String prompt) {
         // todo: implement actual LLM integration

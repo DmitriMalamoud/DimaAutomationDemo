@@ -22,7 +22,7 @@ import org.testinfra.config.TestEnvConfig;
         properties = "server.port=8085",
         classes = SpringApplication.class)
 @ExtendWith(AllureJunit5.class)
-@ExtendWith(AllureListener.class)
+@ExtendWith(TestListener.class)
 public abstract class BaseTest {
     protected TestFailureStateHandler failureHandler;
     protected static AssertionUtil assertion;
