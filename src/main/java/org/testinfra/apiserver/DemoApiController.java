@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-public class DemoApiControler {
+public class DemoApiController {
 
     @PostMapping("/string-mirror")
     public String stringMirror(@Valid @RequestBody TextRequest request) {
-        return String.format("Your text: %s", request.getText());
+        return "Your text: %s".formatted(request.getText());
     }
 
     @PostMapping("/string-count")

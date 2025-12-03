@@ -1,0 +1,8 @@
+Test prompt template content.
+
+1. ${stepsLog},
+2. ${exceptionCause},
+3. ${exceptionMessage},
+4. ${exceptionStackTrace},
+5. ${methodName},
+6. ${className}

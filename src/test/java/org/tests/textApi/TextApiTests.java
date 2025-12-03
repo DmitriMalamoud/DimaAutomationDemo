@@ -1,14 +1,15 @@
-package org.tests;
+package org.tests.textApi;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.testinfra.Logger;
 import org.testinfra.assertionutils.AssertType;
+import org.tests.BaseTest;
 
 import java.net.http.HttpResponse;
 
-public class TextApiTests extends BaseTest{
+public class TextApiTests extends BaseTest {
 
     @Tag("sanity")
     @DisplayName("Mirror Text API Test")

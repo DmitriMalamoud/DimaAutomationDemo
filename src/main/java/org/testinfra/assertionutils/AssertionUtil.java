@@ -14,7 +14,7 @@ public class AssertionUtil {
 
     public void assertTrue(boolean condition, String message, AssertType assertType) {
         if (!condition) {
-            Logger.get().fail(String.format("Assertion failed: %s", message));
+            Logger.get().fail("Assertion failed: %s".formatted(message));
             testFailureStateHandler.fail(message, assertType);
         }
         else {

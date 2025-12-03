@@ -31,7 +31,7 @@ public abstract class ApiClient {
     protected <T> HttpResponse<T> sendApiRequest(String endpoint, String body, List<String> headers, Class<T> responseType)
             throws IOException, InterruptedException {
 
-        URI uri =  URI.create(String.format(URI_TEMPLATE, env.getScheme(), env.getHost(), env.getPort(), endpoint));
+        URI uri =  URI.create(URI_TEMPLATE.formatted(env.getScheme(), env.getHost(), env.getPort(), endpoint));
         logApiRequest(uri.toString(), body, endpoint);
 
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()

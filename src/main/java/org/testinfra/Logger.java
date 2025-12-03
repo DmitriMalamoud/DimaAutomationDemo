@@ -10,6 +10,9 @@ public class Logger {
 
     private static Logger instance;
     private Deque<String> logStack;
+    private List<String> journal;
+
+    private static final String DEFAULT_SEPARATOR = "-".repeat(15);
 
     private Logger(){}
 
@@ -21,24 +24,33 @@ public class Logger {
     }
 
     private void baseLog(String message){
-        baseLog(message, getDefaultSeparator());
+        baseLog(message, DEFAULT_SEPARATOR);
     }
 
     private void baseLog(String message, String separator){
+        final String processedMessage = addTimestampToMessage(message);
         System.out.println(separator);
-        System.out.printf("%s --- %s%n", DateTimeUtils.getCurrentTimestamp(), message);
+        System.out.printf(processedMessage, message);
         System.out.println(separator);
+
+        getJournalObject().add(processedMessage);
     }
 
     public void log(String message){
         baseLog(message);
-        Allure.step(message);
+        Allure.step(addTimestampToMessage(message));
     }
 
     public void fail(String message){
-        String separator = String.join("", Collections.nCopies(5, "-FAIL"));
+        String separator = "-FAIL".repeat(5);
         baseLog("FAILURE: " + message, separator);
-        Allure.step(message, Status.FAILED);
+        Allure.step(addTimestampToMessage(message), Status.FAILED);
+    }
+
+    public void warning(String message){
+        String separator = "-WARNING".repeat(5);
+        baseLog("WARNING: " + message, separator);
+        Allure.step(addTimestampToMessage(message), Status.BROKEN);
     }
 
     public void pass(){
@@ -48,7 +60,7 @@ public class Logger {
     public void newTestStep(String message){
         baseLog("TEST STEP: " + message);
         String uuid = UUID.randomUUID().toString();
-        StepResult stepResult = new StepResult().setName(message);
+        StepResult stepResult = new StepResult().setName(addTimestampToMessage(message));
         Allure.getLifecycle().startStep(uuid, stepResult);
         getLogStack().push(uuid);
     }
@@ -69,14 +81,26 @@ public class Logger {
         }
     }
 
-    private String getDefaultSeparator(){
-        return String.join("", Collections.nCopies(12, "-"));
-    }
-
     private Deque<String> getLogStack(){
         if(null == logStack){
             logStack = new ArrayDeque<>();
         }
         return logStack;
+    }
+
+    private List<String> getJournalObject() {
+        if(null == journal){
+            journal = new ArrayList<>();
+        }
+        return journal;
+    }
+
+    private String addTimestampToMessage(String message){
+        return "%s --- %s".formatted(DateTimeUtils.getCurrentTimestamp(), message);
+    }
+
+    //returns a copy of the journal
+    public List<String> getJournal() {
+        return new ArrayList<>(getJournalObject());
     }
 }
