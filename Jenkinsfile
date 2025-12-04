@@ -9,6 +9,7 @@ pipeline {
     parameters {
         choice(name: 'Environment', choices: ['LOCAL', 'DEV_MOCK', 'STAGING_MOCK', 'FAIL'])
         choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
+        booleanParam(name: 'LLM_Analysis', defaultValue: true, description: 'Enable LLM Analysis for failed tests')
     }
 
     options {
@@ -31,6 +32,7 @@ pipeline {
                         def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
                         mvnCmd += " -Dgroups=${normalizedTag}"
                     }
+                    mvnCmd += " -Dllm=${params.LLM_Analysis}"
                     echo "Running: ${mvnCmd}"
                     sh mvnCmd
                 }

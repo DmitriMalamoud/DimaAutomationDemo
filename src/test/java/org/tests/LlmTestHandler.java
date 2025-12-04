@@ -1,6 +1,5 @@
 package org.tests;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.testinfra.Logger;
 import org.testinfra.llm.LlmGateway;
@@ -12,7 +11,12 @@ import java.util.stream.Stream;
 public class LlmTestHandler {
 
     public String getLlmResponse(String testClassName, String testMethodName, Throwable throwable) {
+        if(!Boolean.getBoolean(System.getProperty("llm"))){
+            return "LLM integration is disabled.";
+        }
+
         LlmTestFailPromptBuilder promptBuilder = new LlmTestFailPromptBuilder();
+
         String prompt = promptBuilder
                 .setClassName(testClassName)
                 .setExceptionCause(throwable.getCause() != null ? throwable.getCause().getMessage() : "N/A")

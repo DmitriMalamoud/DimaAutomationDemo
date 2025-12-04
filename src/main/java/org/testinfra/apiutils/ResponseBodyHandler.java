@@ -6,10 +6,10 @@ import org.testinfra.GsonProvider;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
-public class BodyHandler<T> implements HttpResponse.BodyHandler<T> {
+public class ResponseBodyHandler<T> implements HttpResponse.BodyHandler<T> {
     private final Class<T> type;
 
-    public BodyHandler(Class<T> type) {
+    public ResponseBodyHandler(Class<T> type) {
         this.type = type;
     }
 

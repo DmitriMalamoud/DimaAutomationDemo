@@ -3,12 +3,12 @@ package org.testinfra.apiutils.clients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.testinfra.Logger;
-import org.testinfra.apiutils.BodyHandler;
+import org.testinfra.apiutils.HttpClientProvider;
+import org.testinfra.apiutils.ResponseBodyHandler;
 import org.testinfra.config.TestEnvConfig;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
@@ -16,9 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public abstract class ApiClient {
+public abstract class TestApiClient {
 
-    private static HttpClient httpClient;
     @Autowired
     private TestEnvConfig env;
 
@@ -53,8 +52,8 @@ public abstract class ApiClient {
 
         HttpRequest httpRequest = requestBuilder.build();
 
-        HttpResponse<T> response = getClient()
-                .send(httpRequest, new BodyHandler<>(responseType));
+        HttpResponse<T> response = HttpClientProvider.getClient()
+                .send(httpRequest, new ResponseBodyHandler<>(responseType));
         logApiResponse(response.statusCode(), response.body().toString());
         return response;
     }
@@ -68,12 +67,5 @@ public abstract class ApiClient {
     private void logApiResponse(int code, String body){
         Logger.get().log("Response status code: " + code);
         Logger.get().log("Response body: " + body);
-    }
-
-    private HttpClient getClient(){
-        if(httpClient == null){
-            httpClient = HttpClient.newHttpClient();
-        }
-        return httpClient;
     }
 }

@@ -2,6 +2,7 @@ package org.testinfra.llm;
 
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.stereotype.Component;
+import org.testinfra.config.LlmConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,8 +10,9 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class LlmTestFailPromptBuilder {
+    private LlmConfig config; //todo
+
     private List<String> stepsLog;
     private String methodName;
     private String className;
@@ -20,13 +22,9 @@ public class LlmTestFailPromptBuilder {
     private String promptTemplatePath;
     private PromptType promptType;
 
-    private static final String DEFAULT_PROMPT_TEMPLATE_PATH =
-            "src/main/java/org/testinfra/llm//test_fail_llm_prompt_template.txt";
-
-
     public String build(){
         switch(promptType){
-            case DEFAULT -> promptTemplatePath = DEFAULT_PROMPT_TEMPLATE_PATH;
+            case DEFAULT -> promptTemplatePath = config.getPrompt().getDefaultPath();
             case CUSTOM -> {
                 if(promptTemplatePath == null || promptTemplatePath.isEmpty()){
                     throw new IllegalArgumentException("Custom prompt template path is not set.");

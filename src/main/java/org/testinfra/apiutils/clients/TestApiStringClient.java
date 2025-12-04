@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpResponse;
 
 @Component
-public class ApiStringClient extends ApiClient {
+public class TestApiStringClient extends TestApiClient {
 
     public HttpResponse<String> sendTextMirrorRequest(String text) throws IOException, InterruptedException, URISyntaxException {
        return sendApiRequest("string-mirror", buildBodyJson(text), null, String.class);

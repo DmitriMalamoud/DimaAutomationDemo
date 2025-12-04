@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.testinfra.Logger;
-import org.testinfra.apiutils.clients.ApiStringClient;
+import org.testinfra.apiutils.clients.TestApiStringClient;
 import org.testinfra.assertionutils.AssertionUtil;
 import org.testinfra.assertionutils.TestFailureStateHandler;
 import org.testinfra.config.TestEnvConfig;
@@ -28,7 +28,7 @@ public abstract class BaseTest {
     protected static AssertionUtil assertion;
 
     @Autowired
-    protected ApiStringClient api;
+    protected TestApiStringClient api;
     @Autowired
     private TestEnvConfig env;
 
