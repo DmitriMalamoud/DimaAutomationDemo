@@ -1,8 +1,8 @@
-package org.testinfra;
+package org.demo;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.testinfra.config.TestEnvConfig;
+import org.demo.testinfra.config.TestEnvConfig;
 
 @SpringBootApplication
 @EnableConfigurationProperties({TestEnvConfig.class})

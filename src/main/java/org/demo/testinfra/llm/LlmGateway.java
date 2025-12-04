@@ -1,10 +1,9 @@
-package org.testinfra.llm;
+package org.demo.testinfra.llm;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.testinfra.apiutils.HttpClientProvider;
-import org.testinfra.apiutils.ResponseBodyHandler;
-import org.testinfra.config.LlmConfig;
+import org.demo.testinfra.GsonProvider;
+import org.demo.testinfra.apiutils.HttpClientProvider;
+import org.demo.testinfra.apiutils.ResponseBodyHandler;
+import org.demo.testinfra.config.LlmConfig;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -14,7 +13,7 @@ import java.time.Duration;
 
 public class LlmGateway {
 
-    private LlmConfig config; //todo
+    private LlmConfig config;
     private static LlmGateway instance;
 
     private LlmGateway(){
@@ -28,6 +27,7 @@ public class LlmGateway {
     }
 
     public String getLlmResponse(String prompt) {
+        config = LlmConfig.getConfig();
         HttpClient client = HttpClientProvider.getClient();
         String url = "%s://%s:%d/%s".formatted(
                 config.getApi().getScheme(),
@@ -38,14 +38,14 @@ public class LlmGateway {
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
-                .POST(HttpRequest.BodyPublishers.ofString(prompt))
-                .timeout(Duration.ofMinutes(1))
+                .POST(HttpRequest.BodyPublishers.ofString(buildBody(prompt)))
+                .timeout(Duration.ofSeconds(config.getApi().getTimeoutSec()))
                 .build();
 
-        HttpResponse<LlmResponsePojo> response;
+        HttpResponse<OllamaApiResponsePojo> response;
         try {
             response =
-                    client.send(request, new ResponseBodyHandler<>(LlmResponsePojo.class));
+                    client.send(request, new ResponseBodyHandler<>(OllamaApiResponsePojo.class));
         } catch (Exception e) {
             return "Error communicating with LLM service: " + e.getMessage();
         }
@@ -56,5 +56,14 @@ public class LlmGateway {
             return "LLM service returned empty response body.";
         }
         return response.body().getResponse();
+    }
+
+    private String buildBody(String prompt){
+        OllamaApiRequestPojo bodyObj = new OllamaApiRequestPojo();
+        bodyObj.setModel(config.getApi().getModel());
+        bodyObj.setPrompt(prompt);
+        bodyObj.setStream(false);
+        bodyObj.setNum_predict(config.getApi().getNumPredict());
+        return GsonProvider.getGson().toJson(bodyObj);
     }
 }

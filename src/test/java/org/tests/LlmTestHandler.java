@@ -1,9 +1,9 @@
 package org.tests;
 
 import org.springframework.stereotype.Component;
-import org.testinfra.Logger;
-import org.testinfra.llm.LlmGateway;
-import org.testinfra.llm.LlmTestFailPromptBuilder;
+import org.demo.testinfra.Logger;
+import org.demo.testinfra.llm.LlmGateway;
+import org.demo.testinfra.llm.LlmTestFailPromptBuilder;
 
 import java.util.stream.Stream;
 
@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 public class LlmTestHandler {
 
     public String getLlmResponse(String testClassName, String testMethodName, Throwable throwable) {
-        if(!Boolean.getBoolean(System.getProperty("llm"))){
+        if(!Boolean.parseBoolean(System.getProperty("llm"))){
             return "LLM integration is disabled.";
         }
 

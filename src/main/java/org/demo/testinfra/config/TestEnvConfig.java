@@ -1,4 +1,4 @@
-package org.testinfra.config;
+package org.demo.testinfra.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

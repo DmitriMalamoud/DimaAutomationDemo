@@ -1,8 +1,7 @@
-package org.testinfra.llm;
+package org.demo.testinfra.llm;
 
 import org.apache.commons.text.StringSubstitutor;
-import org.springframework.stereotype.Component;
-import org.testinfra.config.LlmConfig;
+import org.demo.testinfra.config.LlmConfig;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class LlmTestFailPromptBuilder {
-    private LlmConfig config; //todo
+    private LlmConfig config;
 
     private List<String> stepsLog;
     private String methodName;
@@ -23,6 +22,7 @@ public class LlmTestFailPromptBuilder {
     private PromptType promptType;
 
     public String build(){
+        config = LlmConfig.getConfig();
         switch(promptType){
             case DEFAULT -> promptTemplatePath = config.getPrompt().getDefaultPath();
             case CUSTOM -> {

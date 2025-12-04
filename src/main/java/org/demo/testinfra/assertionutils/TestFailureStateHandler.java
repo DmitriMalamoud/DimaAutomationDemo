@@ -1,4 +1,4 @@
-package org.testinfra.assertionutils;
+package org.demo.testinfra.assertionutils;
 
 import java.util.LinkedList;
 import java.util.List;

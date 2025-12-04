@@ -1,6 +1,6 @@
-package org.testinfra.assertionutils;
+package org.demo.testinfra.assertionutils;
 
-import org.testinfra.Logger;
+import org.demo.testinfra.Logger;
 
 import java.util.List;
 

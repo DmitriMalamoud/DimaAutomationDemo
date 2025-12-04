@@ -1,7 +1,7 @@
 package org.tests;
 
 import io.qameta.allure.junit5.AllureJunit5;
-import org.testinfra.SpringApplication;
+import org.demo.SpringApplication;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +9,11 @@ import org.junit.jupiter.api.extension.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.testinfra.Logger;
-import org.testinfra.apiutils.clients.TestApiStringClient;
-import org.testinfra.assertionutils.AssertionUtil;
-import org.testinfra.assertionutils.TestFailureStateHandler;
-import org.testinfra.config.TestEnvConfig;
+import org.demo.testinfra.Logger;
+import org.demo.testinfra.apiutils.clients.TestApiStringClient;
+import org.demo.testinfra.assertionutils.AssertionUtil;
+import org.demo.testinfra.assertionutils.TestFailureStateHandler;
+import org.demo.testinfra.config.TestEnvConfig;
 
 // Use active profile for local tests runs
 @ActiveProfiles("local")

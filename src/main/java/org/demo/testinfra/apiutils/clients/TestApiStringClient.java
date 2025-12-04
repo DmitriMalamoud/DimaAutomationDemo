@@ -1,8 +1,8 @@
-package org.testinfra.apiutils.clients;
+package org.demo.testinfra.apiutils.clients;
 
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Component;
-import org.testinfra.GsonProvider;
+import org.demo.testinfra.GsonProvider;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

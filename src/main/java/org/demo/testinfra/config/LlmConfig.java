@@ -1,6 +1,7 @@
-package org.testinfra.config;
+package org.demo.testinfra.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -26,12 +27,19 @@ public class LlmConfig {
         this.prompt = prompt;
     }
 
+    public static LlmConfig getConfig(){
+        ApplicationContext context = ApplicationContextProvider.getContext();
+        return context.getBean(LlmConfig.class);
+    }
+
     public static class ApiConfig {
         private String scheme;
         private String host;
         private int port;
         private String model;
         private String endpoint;
+        private int timeoutSec;
+        private int numPredict;
 
         public String getScheme() {
             return scheme;
@@ -71,6 +79,22 @@ public class LlmConfig {
 
         public void setEndpoint(String endpoint) {
             this.endpoint = endpoint;
+        }
+
+        public int getTimeoutSec() {
+            return timeoutSec;
+        }
+
+        public void setTimeoutSec(int timeoutSec) {
+            this.timeoutSec = timeoutSec;
+        }
+
+        public int getNumPredict() {
+            return numPredict;
+        }
+
+        public void setNumPredict(int numPredict) {
+            this.numPredict = numPredict;
         }
     }
 

@@ -1,13 +1,13 @@
-package org.testinfra.apiserver;
+package org.demo.apiserver;
 
 import jakarta.validation.constraints.NotNull;
 
-public class TextRequest {
+public class StringApiRequestBody {
     @NotNull(message = "Text must not be null")
     private String text;
     private String subtext;
 
-    public TextRequest(){}
+    public StringApiRequestBody(){}
 
 
     public String getText() {

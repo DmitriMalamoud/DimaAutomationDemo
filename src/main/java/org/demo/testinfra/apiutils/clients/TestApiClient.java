@@ -1,11 +1,11 @@
-package org.testinfra.apiutils.clients;
+package org.demo.testinfra.apiutils.clients;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.testinfra.Logger;
-import org.testinfra.apiutils.HttpClientProvider;
-import org.testinfra.apiutils.ResponseBodyHandler;
-import org.testinfra.config.TestEnvConfig;
+import org.demo.testinfra.Logger;
+import org.demo.testinfra.apiutils.HttpClientProvider;
+import org.demo.testinfra.apiutils.ResponseBodyHandler;
+import org.demo.testinfra.config.TestEnvConfig;
 
 import java.io.IOException;
 import java.net.URI;

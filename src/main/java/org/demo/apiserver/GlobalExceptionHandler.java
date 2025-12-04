@@ -1,4 +1,4 @@
-package org.testinfra.apiserver;
+package org.demo.apiserver;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -17,8 +17,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Map<String, Object>> handleResponseStatusException(
             ResponseStatusException ex,
-            HttpServletRequest request
-    ) {
+            HttpServletRequest request) {
 
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", Instant.now());

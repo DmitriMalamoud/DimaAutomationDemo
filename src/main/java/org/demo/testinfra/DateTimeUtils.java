@@ -1,4 +1,4 @@
-package org.testinfra;
+package org.demo.testinfra;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

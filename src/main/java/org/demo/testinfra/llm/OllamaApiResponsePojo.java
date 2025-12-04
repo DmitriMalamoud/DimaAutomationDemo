@@ -1,6 +1,6 @@
-package org.testinfra.llm;
+package org.demo.testinfra.llm;
 
-public class LlmResponsePojo {
+public class OllamaApiResponsePojo {
     private String model;
     private String created_at;
     private String response;

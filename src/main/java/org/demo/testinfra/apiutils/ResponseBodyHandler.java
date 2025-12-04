@@ -1,7 +1,7 @@
-package org.testinfra.apiutils;
+package org.demo.testinfra.apiutils;
 
 import com.google.gson.JsonObject;
-import org.testinfra.GsonProvider;
+import org.demo.testinfra.GsonProvider;
 
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;

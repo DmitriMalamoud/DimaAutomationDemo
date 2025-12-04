@@ -9,5 +9,7 @@ llm:
     port: 11434
     model: phi3
     endpoint: api/generate
+    timeout_sec: 300
+    num_predict: 350
   prompt:
-    default_path: src/main/java/org/testinfra/llm//test_fail_llm_prompt_template.txt
+    default_path: src/main/java/org/demo/testinfra/llm//test_fail_llm_prompt_template.txt

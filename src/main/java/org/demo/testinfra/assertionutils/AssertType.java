@@ -1,4 +1,4 @@
-package org.testinfra.assertionutils;
+package org.demo.testinfra.assertionutils;
 
 public enum AssertType {
     SOFT,
