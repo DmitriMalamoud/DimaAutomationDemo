@@ -37,8 +37,6 @@ public class LlmGateway {
                 config.getApi().getEndpoint()
         );
 
-        Logger.get().log(url);
-        Logger.get().log(buildBody(prompt));
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .POST(HttpRequest.BodyPublishers.ofString(buildBody(prompt)))
