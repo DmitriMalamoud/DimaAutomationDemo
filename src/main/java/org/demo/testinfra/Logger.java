@@ -31,6 +31,7 @@ public class Logger {
         final String processedMessage = addTimestampToMessage(message);
         System.out.println(separator);
         System.out.printf(processedMessage, message);
+        System.out.println();
         System.out.println(separator);
 
         getJournalObject().add(processedMessage);
