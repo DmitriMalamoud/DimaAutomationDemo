@@ -1,6 +1,7 @@
 package org.demo.testinfra.llm;
 
 import org.demo.testinfra.GsonProvider;
+import org.demo.testinfra.Logger;
 import org.demo.testinfra.apiutils.HttpClientProvider;
 import org.demo.testinfra.apiutils.ResponseBodyHandler;
 import org.demo.testinfra.config.LlmConfig;
@@ -36,6 +37,8 @@ public class LlmGateway {
                 config.getApi().getEndpoint()
         );
 
+        Logger.get().log(url);
+        Logger.get().log(buildBody(prompt));
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .POST(HttpRequest.BodyPublishers.ofString(buildBody(prompt)))
