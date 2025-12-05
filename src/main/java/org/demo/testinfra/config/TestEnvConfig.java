@@ -8,7 +8,6 @@ public class TestEnvConfig {
     private String name;
     private String scheme;
     private String host;
-    private String apiKey;
     private int port;
 
     public String getName() {
@@ -33,14 +32,6 @@ public class TestEnvConfig {
 
     public void setHost(String host) {
         this.host = host;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public void setApiKey(String apiKey) {
-        this.apiKey = apiKey;
     }
 
     public int getPort() {

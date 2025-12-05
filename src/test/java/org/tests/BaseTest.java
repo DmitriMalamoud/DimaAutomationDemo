@@ -16,7 +16,7 @@ import org.demo.testinfra.assertionutils.TestFailureStateHandler;
 import org.demo.testinfra.config.TestEnvConfig;
 
 // Use active profile for local tests runs
-@ActiveProfiles("local")
+//@ActiveProfiles("local")
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,
         properties = "server.port=8085",

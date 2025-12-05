@@ -1,5 +1,0 @@
-env:
-  name: staging_mock
-  scheme: http
-  host: localhost
-  port: 8085

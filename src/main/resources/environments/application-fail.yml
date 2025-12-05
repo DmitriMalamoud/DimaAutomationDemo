@@ -3,3 +3,15 @@ env:
   scheme: http
   host: fail.url
   port: 8085
+
+llm:
+  api:
+    scheme: http
+    host: localhost
+    port: 11434
+    model: phi3
+    endpoint: api/generate
+    timeout_sec: 300
+    num_predict: 350
+  prompt:
+    default_path: src/main/java/org/demo/testinfra/llm//test_fail_llm_prompt_template.txt

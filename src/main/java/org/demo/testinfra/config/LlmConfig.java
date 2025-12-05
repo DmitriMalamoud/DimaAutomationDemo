@@ -4,8 +4,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-@Component
 @ConfigurationProperties(prefix = "llm")
+@Component
 public class LlmConfig {
 
     private ApiConfig api;
