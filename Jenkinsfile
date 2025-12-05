@@ -7,7 +7,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'Environment', choices: ['LOCAL', 'JENKINS', 'FAIL'])
+        choice(name: 'Environment', choices: ['JENKINS', 'LOCAL', 'FAIL'])
         choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
         booleanParam(name: 'LLM_Analysis', defaultValue: true, description: 'Enable LLM Analysis for failed tests')
     }
