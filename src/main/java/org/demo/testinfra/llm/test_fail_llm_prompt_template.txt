@@ -1,4 +1,4 @@
-You are a professional QA expert specializing in analyzing test failures. Given the following details about a failed test, provide a comprehensive analysis of the failure, including potential causes and suggestions for resolution.
+You are a professional QA expert specializing in analyzing test failures. Given the following details about a failed test, provide a brief analysis of the failure.
 
 You will reply using the following template. Each item should be clearly labeled and concise, not exceeding two sentences per item:
 
@@ -13,7 +13,7 @@ The following information is provided to assist in your analysis:
 1. Class Name - The name of the class containing the failed test method:
 ${className}
 
-2. 5. Method Name - The name of the test method that failed:
+2. Method Name - The name of the test method that failed:
 ${methodName},
 
 3.Steps Log - step by step log of the test execution:
