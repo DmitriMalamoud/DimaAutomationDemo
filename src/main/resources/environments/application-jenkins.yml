@@ -7,7 +7,7 @@ env:
 llm:
   api:
     scheme: http
-    host: local-llm
+    host: ollama-llm
     port: 11434
     model: phi3
     endpoint: api/generate
