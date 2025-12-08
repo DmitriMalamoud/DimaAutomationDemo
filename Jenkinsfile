@@ -23,6 +23,19 @@ pipeline {
             }
         }
 
+        stages {
+                stage('Prepare workspace') {
+                    steps {
+                        cleanWs deleteDirs: true
+
+                        sh '''
+                          rm -rf .allure                || true
+                          rm -rf target/allure-results  || true
+                          rm -rf allure-report          || true
+                        '''
+                    }
+                }
+
         stage('Build + Test') {
             steps {
                 script {
