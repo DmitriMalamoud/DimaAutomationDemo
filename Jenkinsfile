@@ -23,18 +23,17 @@ pipeline {
             }
         }
 
-        stages {
-                stage('Prepare workspace') {
-                    steps {
-                        cleanWs deleteDirs: true
+        stage('Prepare workspace') {
+            steps {
+                cleanWs deleteDirs: true
 
-                        sh '''
-                          rm -rf .allure                || true
-                          rm -rf target/allure-results  || true
-                          rm -rf allure-report          || true
-                        '''
-                    }
-                }
+                    sh '''
+                        rm -rf .allure                || true
+                        rm -rf target/allure-results  || true
+                        rm -rf allure-report          || true
+                    '''
+            }
+        }
 
         stage('Build + Test') {
             steps {
@@ -42,23 +41,13 @@ pipeline {
                     def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
                     def group = params.TestGroup?.trim()
                     if (group && !group.equalsIgnoreCase('All')) {
-                        def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
-                        mvnCmd += " -Dgroups=${normalizedTag}"
+                         def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
+                         mvnCmd += " -Dgroups=${normalizedTag}"
                     }
                     mvnCmd += " -Dllm=${params.LLM_Analysis}"
                     echo "Running: ${mvnCmd}"
                     sh mvnCmd
                 }
-                // DEBUG
-                        sh '''
-                          echo ">>> DEBUG: looking for allure-results directories"
-                          find . -maxdepth 6 -type d -name "allure-results" -print || true
-                          echo ">>> DEBUG: listing any found allure-results"
-                          for d in $(find . -maxdepth 6 -type d -name "allure-results"); do
-                            echo "---- $d ----"
-                            ls -R "$d" || true
-                          done
-                        '''
             }
         }
     }
