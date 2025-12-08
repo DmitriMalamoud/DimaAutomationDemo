@@ -10,8 +10,8 @@ RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
 COPY --chown=jenkins:jenkins jenkins.yml /var/jenkins_home/casc_configs/jenkins.yaml
 
 USER root
-RUN apt-get update && apt-get install -y wget unzip && \
-    wget -qO /tmp/allure.zip https://github.com/allure-framework/allure2/releases/latest/download/allure-commandline.zip && \
+RUN apt-get update && apt-get install -y wget && \
+    wget -qO /tmp/allure.zip https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.zip && \
     unzip /tmp/allure.zip -d /opt && \
     mv /opt/allure-* /opt/allure && \
     ln -s /opt/allure/bin/allure /usr/local/bin/allure && \

@@ -7,7 +7,7 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'Environment', choices: ['JENKINS', 'LOCAL', 'FAIL'])
+        choice(name: 'Environment', choices: ['BOOTSTRAP', 'JENKINS', 'LOCAL', 'FAIL'])
         choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
         booleanParam(name: 'LLM_Analysis', defaultValue: true, description: 'Enable LLM Analysis for failed tests')
     }
@@ -20,7 +20,7 @@ pipeline {
         stage('Run Pipeline') {
             when {
                 expression {
-                    return params.Environment && params.TestGroup
+                    return params.Environment != 'BOOTSTRAP'
                 }
             }
             stages {
