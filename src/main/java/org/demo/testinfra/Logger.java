@@ -58,6 +58,11 @@ public class Logger {
         Allure.step("Test Passed", Status.PASSED);
     }
 
+    public void step(String message, Allure.ThrowableRunnableVoid runnable){
+        baseLog("TEST STEP: " + message);
+        Allure.step(message, runnable);
+    }
+
     public void newTestStep(String message){
         baseLog("TEST STEP: " + message);
         String uuid = UUID.randomUUID().toString();

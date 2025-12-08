@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.demo.testinfra.Logger;
 import org.demo.testinfra.apiutils.clients.TestApiStringClient;
 import org.demo.testinfra.assertionutils.AssertionUtil;
