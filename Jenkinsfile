@@ -17,24 +17,33 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
+        stage('Run Pipeline') {
+            when {
+                expression {
+                    return params.Environment && params.TestGroup
+                }
             }
-        }
-
-        stage('Build + Test') {
-            steps {
-                script {
-                    def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
-                    def group = params.TestGroup?.trim()
-                    if (group && !group.equalsIgnoreCase('All')) {
-                        def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
-                        mvnCmd += " -Dgroups=${normalizedTag}"
+            stages {
+                stage('Checkout') {
+                    steps {
+                        checkout scm
                     }
-                    mvnCmd += " -Dllm=${params.LLM_Analysis}"
-                    echo "Running: ${mvnCmd}"
-                    sh mvnCmd
+                }
+
+                stage('Build + Test') {
+                    steps {
+                        script {
+                            def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
+                            def group = params.TestGroup?.trim()
+                            if (group && !group.equalsIgnoreCase('All')) {
+                                def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
+                                mvnCmd += " -Dgroups=${normalizedTag}"
+                            }
+                            mvnCmd += " -Dllm=${params.LLM_Analysis}"
+                            echo "Running: ${mvnCmd}"
+                            sh mvnCmd
+                        }
+                    }
                 }
             }
         }
@@ -43,10 +52,14 @@ pipeline {
     post {
         always {
             script {
-                currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
+                if (params.Environment) {
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
+                } else {
+                    currentBuild.displayName = "#${env.BUILD_NUMBER} - Skipped"
+                }
             }
 
-//             allure results: [[path: 'target/allure-results']]
+            allure results: [[path: 'target/allure-results']]
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             cleanWs()
         }

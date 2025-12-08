@@ -25,11 +25,8 @@ tool:
   allure:
     installations:
       - name: "allure"
-        properties:
-          - installSource:
-              installers:
-                - allureCommandlineInstaller:
-                    id: "2.35.1"
+        home: "/opt/allure"
+        properties: [ ]
 
 jobs:
   - script: >

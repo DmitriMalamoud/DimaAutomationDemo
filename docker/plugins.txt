@@ -6,3 +6,4 @@ git
 workflow-aggregator
 jdk-tool
 matrix-project
+ws-cleanup
