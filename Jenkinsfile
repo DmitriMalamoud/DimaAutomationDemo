@@ -9,7 +9,7 @@ pipeline {
     parameters {
         choice(name: 'Environment', choices: ['JENKINS', 'LOCAL', 'FAIL'])
         choice(name: 'TestGroup', choices: ['Sanity', 'Fail Demo', 'All'])
-        booleanParam(name: 'LLM_Analysis', defaultValue: true, description: 'Enable LLM Analysis for failed tests')
+        booleanParam(name: 'LLM_Analysis', defaultValue: false, description: 'Enable LLM Analysis for failed tests')
     }
 
     options {
@@ -29,8 +29,8 @@ pipeline {
                     def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
                     def group = params.TestGroup?.trim()
                     if (group && !group.equalsIgnoreCase('All')) {
-                         def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
-                         mvnCmd += " -Dgroups=${normalizedTag}"
+                        def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
+                        mvnCmd += " -Dgroups=${normalizedTag}"
                     }
                     mvnCmd += " -Dllm=${params.LLM_Analysis}"
                     echo "Running: ${mvnCmd}"
@@ -46,17 +46,9 @@ pipeline {
                 currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
 
-            sh 'test -d target/allure-results || mkdir -p target/allure-results'
-            allure([
-                includeProperties: false,
-                jdk: '',
-                commandline: 'allure',
-                properties: [],
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'target/allure-results']]
-            ])
+            allure results: [[path: 'target/allure-results']]
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
-            cleanWs(deleteDirs: true, disableDeferredWipeout: true)
+            cleanWs()
         }
     }
 }
