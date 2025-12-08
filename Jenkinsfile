@@ -56,7 +56,7 @@ pipeline {
                 results: [[path: 'target/allure-results']]
             ])
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
-            cleanWs((deleteDirs: true, disableDeferredWipeout: true))
+            cleanWs(deleteDirs: true, disableDeferredWipeout: true)
         }
     }
 }
