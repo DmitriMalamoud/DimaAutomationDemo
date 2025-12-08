@@ -13,12 +13,7 @@ tool:
   jdk:
     installations:
       - name: "jdk21"
-        properties:
-          - installSource:
-              installers:
-                - jdkInstaller:
-                    id: "jdk-21.0.1+12"
-                    acceptLicense: true
+        home: "/opt/java/openjdk"
   maven:
     installations:
       - name: "maven-3.9.11"
@@ -27,14 +22,14 @@ tool:
               installers:
                 - maven:
                     id: "3.9.11"
-#  allureCommandline:
-#    installations:
-#      - name: "allure"
-#        properties:
-#          - installSource:
-#              installers:
-#                - allureCommandlineInstaller:
-#                    id: "2.35.1"
+  allure:
+    installations:
+      - name: "allure"
+        properties:
+          - installSource:
+              installers:
+                - allureCommandlineInstaller:
+                    id: "2.35.1"
 
 jobs:
   - script: >
