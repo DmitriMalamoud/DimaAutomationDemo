@@ -17,18 +17,6 @@ pipeline {
     }
 
     stages {
-        stage('Prepare workspace') {
-            steps {
-                cleanWs deleteDirs: true
-
-                sh '''
-                    rm -rf .allure                || true
-                    rm -rf target/allure-results  || true
-                    rm -rf allure-report          || true
-                '''
-            }
-        }
-
         stage('Checkout') {
             steps {
                 checkout scm
@@ -58,9 +46,17 @@ pipeline {
                 currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
 
-            allure results: [[path: 'target/allure-results']]
+            sh 'test -d target/allure-results || mkdir -p target/allure-results'
+            allure([
+                includeProperties: false,
+                jdk: '',
+                commandline: 'allure',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'target/allure-results']]
+            ])
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
-            cleanWs()
+            cleanWs((deleteDirs: true, disableDeferredWipeout: true))
         }
     }
 }
