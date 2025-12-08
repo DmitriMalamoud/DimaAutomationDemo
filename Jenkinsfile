@@ -36,6 +36,16 @@ pipeline {
                     echo "Running: ${mvnCmd}"
                     sh mvnCmd
                 }
+                // DEBUG
+                        sh '''
+                          echo ">>> DEBUG: looking for allure-results directories"
+                          find . -maxdepth 6 -type d -name "allure-results" -print || true
+                          echo ">>> DEBUG: listing any found allure-results"
+                          for d in $(find . -maxdepth 6 -type d -name "allure-results"); do
+                            echo "---- $d ----"
+                            ls -R "$d" || true
+                          done
+                        '''
             }
         }
     }
