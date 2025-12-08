@@ -7,8 +7,8 @@ pipeline {
     }
 
     parameters {
-        choice(name: 'Environment', choices: ['BOOTSTRAP', 'JENKINS', 'LOCAL', 'FAIL'])
-        choice(name: 'TestGroup', choices: ['All', 'Sanity', 'Fail Demo'])
+        choice(name: 'Environment', choices: ['JENKINS', 'LOCAL', 'FAIL'])
+        choice(name: 'TestGroup', choices: ['Sanity', 'Fail Demo', 'All'])
         booleanParam(name: 'LLM_Analysis', defaultValue: true, description: 'Enable LLM Analysis for failed tests')
     }
 
@@ -17,33 +17,24 @@ pipeline {
     }
 
     stages {
-        stage('Run Pipeline') {
-            when {
-                expression {
-                    return params.Environment != 'BOOTSTRAP'
-                }
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
-            stages {
-                stage('Checkout') {
-                    steps {
-                        checkout scm
-                    }
-                }
+        }
 
-                stage('Build + Test') {
-                    steps {
-                        script {
-                            def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
-                            def group = params.TestGroup?.trim()
-                            if (group && !group.equalsIgnoreCase('All')) {
-                                def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
-                                mvnCmd += " -Dgroups=${normalizedTag}"
-                            }
-                            mvnCmd += " -Dllm=${params.LLM_Analysis}"
-                            echo "Running: ${mvnCmd}"
-                            sh mvnCmd
-                        }
+        stage('Build + Test') {
+            steps {
+                script {
+                    def mvnCmd = "mvn -B clean test -Dspring.profiles.active=${params.Environment.toLowerCase()}"
+                    def group = params.TestGroup?.trim()
+                    if (group && !group.equalsIgnoreCase('All')) {
+                        def normalizedTag = group.toLowerCase().replaceAll(/\s+/, '_')
+                        mvnCmd += " -Dgroups=${normalizedTag}"
                     }
+                    mvnCmd += " -Dllm=${params.LLM_Analysis}"
+                    echo "Running: ${mvnCmd}"
+                    sh mvnCmd
                 }
             }
         }
@@ -52,11 +43,7 @@ pipeline {
     post {
         always {
             script {
-                if (params.Environment) {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
-                } else {
-                    currentBuild.displayName = "#${env.BUILD_NUMBER} - Skipped"
-                }
+                currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
 
             allure results: [[path: 'target/allure-results']]
