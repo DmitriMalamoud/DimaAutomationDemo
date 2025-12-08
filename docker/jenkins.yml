@@ -19,6 +19,11 @@ tool:
       - name: "maven-3.9.11"
         home: "/opt/maven"
         properties: [ ]
+  allure:
+    installations:
+      - name: "allure"
+        home: "/opt/allure"
+        properties: [ ]
 
 jobs:
   - script: >
