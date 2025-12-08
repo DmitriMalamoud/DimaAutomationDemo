@@ -18,7 +18,9 @@ services:
       - "11434:11434"
     volumes:
       - ollama:/root/.ollama
+      - ./ollama-entrypoint.sh:/ollama-entrypoint.sh
     restart: unless-stopped
+    entrypoint: ["/ollama-entrypoint.sh"]
 
 volumes:
   jenkins_home:

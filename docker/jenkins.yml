@@ -1,0 +1,55 @@
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+tool:
+  jdk:
+    installations:
+      - name: "jdk21"
+        properties:
+          - installSource:
+              installers:
+                - jdkInstaller:
+                    id: "jdk-21.0.1+12"
+                    acceptLicense: true
+  maven:
+    installations:
+      - name: "maven-3.9.11"
+        properties:
+          - installSource:
+              installers:
+                - maven:
+                    id: "3.9.11"
+#  allureCommandline:
+#    installations:
+#      - name: "allure"
+#        properties:
+#          - installSource:
+#              installers:
+#                - allureCommandlineInstaller:
+#                    id: "2.35.1"
+
+jobs:
+  - script: >
+      pipelineJob('test-automation-demo') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/DmitriMalamoud/DimaAutomationDemo.git')
+                }
+                branch('*/master')
+              }
+            }
+            scriptPath('Jenkinsfile')
+          }
+        }
+      }

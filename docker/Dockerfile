@@ -1,22 +1,10 @@
 FROM jenkins/jenkins:lts-jdk21
 
-USER root
-
-RUN apt-get update \
- && apt-get install -y maven git  curl unzip \
- && rm -rf /var/lib/apt/lists/*
-
-ENV ALLURE_VERSION=2.35.1
-RUN mkdir -p /opt && \
-    curl -Lo /opt/allure-${ALLURE_VERSION}.zip \
-         https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${ALLURE_VERSION}/allure-commandline-${ALLURE_VERSION}.zip && \
-    unzip /opt/allure-${ALLURE_VERSION}.zip -d /opt && \
-    ln -s /opt/allure-${ALLURE_VERSION}/bin/allure /usr/local/bin/allure && \
-    rm /opt/allure-${ALLURE_VERSION}.zip
-
-RUN chown -R jenkins:jenkins /opt/allure-${ALLURE_VERSION}
-
-USER jenkins
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false" \
+                ALLURE_VERSION=2.35.1 \
+                CASC_JENKINS_CONFIG="/var/jenkins_home/casc_configs/jenkins.yaml"
 
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN jenkins-plugin-cli --plugin-file /usr/share/jenkins/ref/plugins.txt
+
+COPY --chown=jenkins:jenkins jenkins.yml /var/jenkins_home/casc_configs/jenkins.yaml

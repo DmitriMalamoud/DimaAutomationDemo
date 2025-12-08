@@ -45,11 +45,8 @@ pipeline {
             script {
                 currentBuild.displayName = "#${env.BUILD_NUMBER} env_${params.Environment}"
             }
-            allure(
-                includeProperties: false,
-                jdk: '',
-                results: [[path: 'target/allure-results']]
-            )
+
+            allure results: [[path: 'target/allure-results']]
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             cleanWs()
         }
